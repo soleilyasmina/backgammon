@@ -40,3 +40,6 @@ At beginning of game, roll to determine who goes first.
 
 The player rolls the dice, then:
   1. If the rolling player has any pieces captured, they must first place their captured piece(s) on an open space.
+  2. Else, if all of the rolling player's pieces are in the home territory, eat according to rolls.
+  3. Else, click on a piece with a yellow border to move it to the relevant place. (If doubles, then player has 4 moves).
+  4. Switch players.
