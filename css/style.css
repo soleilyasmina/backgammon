@@ -24,48 +24,16 @@ section {
 .up-spaces, .down-spaces {
   flex: 1;
 }
-.up-black {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 200px solid black;
-  display: inline;
-  position: relative;
-}
-
-.up-red {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 200px solid red;
-  display: inline;
-  position: relative;
-}
-
-.down-black {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-top: 200px solid black;
-  display: inline;
-  position: relative;
-}
-
-.down-red {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-top: 200px solid red;
-  display: inline;
-  position: relative;
-}
 
 .black-piece {
   width: 40px;
   height: 40px;
-  position: absolute;
   background-image: linear-gradient(to top, black, #242728);
   border: 5px solid red;
   box-sizing: border-box;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s 
+  transition: all 0.07s
 }
 
 .red-piece {
