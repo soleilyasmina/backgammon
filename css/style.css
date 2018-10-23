@@ -1,6 +1,7 @@
-body {
+.board {
   display: flex;
   position: relative;
+  border: 1px solid black;
 }
 .left, .right {
   border: 40px solid tan;
@@ -28,6 +29,7 @@ section {
   border-right: 40px solid transparent;
   border-bottom: 200px solid black;
   display: inline;
+  position: relative;
 }
 
 .up-red {
@@ -35,6 +37,7 @@ section {
   border-right: 40px solid transparent;
   border-bottom: 200px solid red;
   display: inline;
+  position: relative;
 }
 
 .down-black {
@@ -42,6 +45,7 @@ section {
   border-right: 40px solid transparent;
   border-top: 200px solid black;
   display: inline;
+  position: relative;
 }
 
 .down-red {
@@ -49,6 +53,7 @@ section {
   border-right: 40px solid transparent;
   border-top: 200px solid red;
   display: inline;
+  position: relative;
 }
 
 .black-piece {
@@ -56,22 +61,19 @@ section {
   height: 40px;
   position: absolute;
   background-image: linear-gradient(to top, black, #242728);
-  border: 1px solid #353839;
+  border: 5px solid red;
+  box-sizing: border-box;
   border-radius: 100%;
+  z-index: 40;
 }
-.space1 {
-top: 200px;
-left: 20px;
-}
-.space2 {
-top: 200px;
-left: 100px;
-}
-.space3 {
-top: 200px;
-left: 180px;
-}
-.space4 {
-top: 200px;
-left: 260px;
+
+.red-piece {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-image: linear-gradient(to top, red, #FF2728);
+  border: 5px solid black;
+  box-sizing: border-box;
+  border-radius: 100%;
+  z-index: 40;
 }
