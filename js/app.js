@@ -1,3 +1,7 @@
+/**
+ * [board description]
+ * @type {Object}
+ */
 const board = {
   spaces: [],
   blackCaptured: [],
@@ -6,6 +10,11 @@ const board = {
   redEaten: []
 }
 
+/**
+ * @func createGameBlacks
+ * @desc
+ * @return {undefined}
+ */
 const createGameBlacks = () => {
   for (let i = 1; i <= 15; i++) {
     let piece = {};
@@ -25,6 +34,11 @@ const createGameBlacks = () => {
     }
   }
 }
+
+/**
+ * [createGameReds description]
+ * @return {[type]} [description]
+ */
 const createGameReds = () => {
   for (let i = 1; i <= 15; i++) {
     let piece = {};
@@ -45,12 +59,17 @@ const createGameReds = () => {
   }
 }
 
+/**
+ * [createViewBlacks description]
+ * @return {[type]} [description]
+ */
 const createViewBlacks = () => {
   for (let i = 1; i <= 15; i++) {
     let black = document.createElement('div');
     black.className = 'black-piece';
+    black.dataset.number = i;
     black.id = 'black' + i;
-    black.addEventListener('click', () => console.log(black.id));
+    black.addEventListener('click', () => console.log(black.dataset.number));
     if (i < 3) {
       black.style.top = 200 + (40*(i-1)) + 'px';
       black.style.left = '20px';
@@ -74,12 +93,17 @@ const createViewBlacks = () => {
   }
 }
 
+/**
+ * [createViewReds description]
+ * @return {[type]} [description]
+ */
 const createViewReds = () => {
   for (let i = 1; i <= 15; i++) {
     let red = document.createElement('div');
     red.className = 'red-piece';
+    red.dataset.number = i;
     red.id = 'red' + i;
-    red.addEventListener('click', () => console.log(red.id));
+    red.addEventListener('click', () => console.log(red.dataset.number));
     if (i < 3) {
       red.style.top = 595 - (40*(i-1)) + 'px';
       red.style.left = '20px';
@@ -103,6 +127,10 @@ const createViewReds = () => {
   }
 }
 
+/**
+ * [gameBoard description]
+ * @return {[type]} [description]
+ */
 const gameBoard = () => {
   for (let i = 0; i < 24; i++) {
     board.spaces.push([]);
@@ -113,3 +141,7 @@ const gameBoard = () => {
   createViewReds();
 }
 gameBoard();
+
+const moveViewPiece = (piece, place) => {
+  
+}
