@@ -65,6 +65,7 @@ section {
   box-sizing: border-box;
   border-radius: 100%;
   z-index: 40;
+  transition: all 0.07s 
 }
 
 .red-piece {

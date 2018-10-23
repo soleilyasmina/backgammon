@@ -17,7 +17,7 @@ const createGameBlacks = () => {
     else if (i < 8) {
       board.spaces[11].push(piece);
     }
-    else if (i < 111) {
+    else if (i < 11) {
       board.spaces[16].push(piece);
     }
     else {
@@ -49,6 +49,8 @@ const createViewBlacks = () => {
   for (let i = 1; i <= 15; i++) {
     let black = document.createElement('div');
     black.className = 'black-piece';
+    black.id = 'black' + i;
+    black.addEventListener('click', () => console.log(black.id));
     if (i < 3) {
       black.style.top = 200 + (40*(i-1)) + 'px';
       black.style.left = '20px';
@@ -73,11 +75,32 @@ const createViewBlacks = () => {
 }
 
 const createViewReds = () => {
-  let red = document.createElement('div');
-  red.className = 'red-piece';
-  red.style.top = '590px';
-  red.style.left = '20px';
-  document.querySelector('#bot-left').appendChild(red);
+  for (let i = 1; i <= 15; i++) {
+    let red = document.createElement('div');
+    red.className = 'red-piece';
+    red.id = 'red' + i;
+    red.addEventListener('click', () => console.log(red.id));
+    if (i < 3) {
+      red.style.top = 595 - (40*(i-1)) + 'px';
+      red.style.left = '20px';
+      document.querySelector('#top-left').appendChild(red);
+    }
+    else if (i < 8) {
+      red.style.top = 595 - (40*(i-3)) + 'px';
+      red.style.left = '420px';
+      document.querySelector('#top-right').appendChild(red);
+    }
+    else if (i < 11) {
+      red.style.top = 200 + (40*(i-8)) + 'px';
+      red.style.left = '100px';
+      document.querySelector('#top-right').appendChild(red);
+    }
+    else {
+      red.style.top = 200 + (40*(i-11)) + 'px';
+      red.style.left = '420px';
+      document.querySelector('#top-left').appendChild(red);
+    }
+  }
 }
 
 const gameBoard = () => {
