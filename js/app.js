@@ -47,7 +47,8 @@ const createGameReds = () => {
   for (let i = 1; i <= 15; i++) {
     let piece = {};
     piece.color = 'red';
-    piece.number = i;
+    piece.number = i - 1;
+    piece.id = 'red' + i;
     if (i < 3) {
       piece.currentSpace = 12;
       board.spaces[12].push(piece);
@@ -68,26 +69,30 @@ const createGameReds = () => {
 }
 
 const viewState = () => {
+  let $pieces = $('.piece');
+  if ($pieces != undefined) {
+    $('.piece').remove();
+  }
   const spaces = document.querySelectorAll('.space');
-  let black = 0;
-  let red = 0;
   for (let i = 0; i < 24; i++) {
     for (let j = 0; j < board.spaces[i].length; j++) {
       let piece = document.createElement('div');
       if (board.spaces[i][j].color === 'black') {
-        piece.className = 'black-piece';
-        black += 1;
-        piece.dataset.number = black;
+        piece.classList.add('black-piece');
       }
       else {
-        piece.className = 'red-piece';
-        red += 1;
-        piece.dataset.number = red;
+        piece.classList.add('red-piece');
       }
-      piece.addEventListener('click', () => console.log(piece.dataset.number))
+      piece.classList.add('piece');
+      piece.addEventListener('click', () => console.log('nothing'))
       spaces[i].appendChild(piece);
     }
   }
+}
+
+const changeSpace = (first, second) => {
+  board.spaces[second].push(board.spaces[first].pop());
+  viewState();
 }
 
 /**
