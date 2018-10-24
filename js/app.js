@@ -5,9 +5,7 @@
 const board = {
   spaces: [],
   blackCaptured: [],
-  redCaptured: [],
-  blackEaten: [],
-  redEaten: []
+  redCaptured: []
 }
 
 /**
@@ -48,7 +46,6 @@ const createGameReds = () => {
     let piece = {};
     piece.color = 'red';
     piece.number = i - 1;
-    piece.id = 'red' + i;
     if (i < 3) {
       piece.currentSpace = 12;
       board.spaces[12].push(piece);
@@ -106,18 +103,25 @@ const viewState = () => {
   }
 }
 
+const capture = (firstSpace, secondSpace) => {
+  if (firstSpace[firstSpace.length-1].color != secondSpace[secondSpace.length - 1].color) {
+    if (secondSpace[secondSpace.length - 1].color === 'black') {
+      board.blackCaptured.push(secondSpace.pop());
+    }
+    else {
+      board.redCaptured.push(secondSpace.pop());
+    }
+  }
+}
+
 const changeSpace = (first, second) => {
   let firstSpace = board.spaces[first];
   let secondSpace = board.spaces[second];
-  console.log(firstSpace[firstSpace.length - 1].color);
-  if (secondSpace.length === 1 &&
-      firstSpace[firstSpace.length-1].color
-      != secondSpace[secondSpace.length - 1].color) {
-      secondSpace[secondSpace.length - 1].color === 'black' ?
-      board.blackCaptured.push(secondSpace.pop()) :
-      board.redCaptured.push(secondSpace.pop());
+  if (secondSpace.length === 1) {
+    capture(firstSpace,secondSpace);
   }
   secondSpace.push(firstSpace.pop());
+  console.log(board.spaces,board.redCaptured,board.blackCaptured);
   viewState();
 }
 
