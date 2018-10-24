@@ -74,7 +74,9 @@ const viewState = () => {
     $('.piece').remove();
   }
   const spaces = document.querySelectorAll('.space');
-  for (let i = 0; i < 24; i++) {
+  const redCaptureSpace = document.querySelector('.red-capture');
+  const blackCaptureSpace = document.querySelector('.black-capture');
+  for (let i = 0; i < board.spaces.length; i++) {
     for (let j = 0; j < board.spaces[i].length; j++) {
       let piece = document.createElement('div');
       if (board.spaces[i][j].color === 'black') {
@@ -84,14 +86,38 @@ const viewState = () => {
         piece.classList.add('red-piece');
       }
       piece.classList.add('piece');
-      piece.addEventListener('click', () => console.log('nothing'))
+      piece.addEventListener('click', () => console.log('nothing'));
       spaces[i].appendChild(piece);
     }
+  }
+  for (let i = 0; i < board.redCaptured.length; i++) {
+    let piece = document.createElement('div');
+    piece.classList.add('red-piece');
+    piece.classList.add('piece');
+    piece.addEventListener('click', () => console.log('nothing'));
+    redCaptureSpace.append(piece);
+  }
+  for (let i = 0; i < board.blackCaptured.length; i++) {
+    let piece = document.createElement('div');
+    piece.classList.add('black-piece');
+    piece.classList.add('piece');
+    piece.addEventListener('click', () => console.log('nothing'));
+    blackCaptureSpace.append(piece);
   }
 }
 
 const changeSpace = (first, second) => {
-  board.spaces[second].push(board.spaces[first].pop());
+  let firstSpace = board.spaces[first];
+  let secondSpace = board.spaces[second];
+  console.log(firstSpace[firstSpace.length - 1].color);
+  if (secondSpace.length === 1 &&
+      firstSpace[firstSpace.length-1].color
+      != secondSpace[secondSpace.length - 1].color) {
+      secondSpace[secondSpace.length - 1].color === 'black' ?
+      board.blackCaptured.push(secondSpace.pop()) :
+      board.redCaptured.push(secondSpace.pop());
+  }
+  secondSpace.push(firstSpace.pop());
   viewState();
 }
 
