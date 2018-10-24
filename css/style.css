@@ -37,6 +37,24 @@
   padding: 0 10px;
   box-sizing: border-box;
 }
+.dice-container {
+  display: flex;
+  width: 600px;
+  margin: 0 auto;
+  justify-content: center;
+
+}
+.dice {
+  width: 150px;
+  height: 150px;
+  padding: 0 25px;
+  box-sizing: border-box;
+  color: black;
+  font-family: 'Montserrat';
+  font-size: 125px;
+  text-align: center;
+  flex: 0 0 25%;
+}
 
 .red-capture {
   justify-content: flex-end;
