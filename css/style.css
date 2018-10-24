@@ -6,6 +6,11 @@
   border: 25px solid tan;
   margin: 0 auto;
 }
+.eaten-container {
+  display: flex;
+  margin: 0 auto;
+  width: 700px;
+}
 
 .space {
   width: 50px;
@@ -20,6 +25,17 @@
   background-image: url(../assets/capture.png);
   display: flex;
   flex-direction: column;
+}
+
+.eaten {
+  width: 250px;
+  height: 70px;
+  background-image: url(../assets/capture.png);
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 50%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .red-capture {
@@ -55,9 +71,8 @@
 .black-piece {
   width: 50px;
   height: 50px;
-  background-image: linear-gradient(to top, black, #242728);
-  border: 5px solid red;
-  box-sizing: border-box;
+  background: url(../assets/black-piece.png);
+  background-size: cover;
   border-radius: 100%;
   z-index: 40;
   transition: all 0.07s linear;
@@ -67,11 +82,31 @@
 .red-piece {
   width: 50px;
   height: 50px;
-  background-image: linear-gradient(to top, red, #FF2728);
-  border: 5px solid black;
-  box-sizing: border-box;
+  background: url(../assets/red-piece.png);
+  background-size: cover;
   border-radius: 100%;
   z-index: 40;
   transition: all 0.07s linear;
   flex: 0 0 20%;
+}
+
+.black-eaten .black-piece {
+  width: 10px;
+  height: 10px;
+  background: url(../assets/black-piece.png);
+  background-size: cover;
+  border-radius: 100%;
+  z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 15%;
+}
+.red-eaten .red-piece {
+  width: 50px;
+  height: 50px;
+  background: url(../assets/red-piece.png);
+  background-size: cover;
+  border-radius: 100%;
+  z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 14.5%;
 }
