@@ -7,7 +7,8 @@ const board = {
   blackCaptured: [],
   redCaptured: [],
   blackEaten: [],
-  redEaten: []
+  redEaten: [],
+  moves: []
 }
 
 /**
@@ -158,6 +159,23 @@ const changeSpace = (first, second) => {
   secondSpace.push(firstSpace.pop());
   console.log(board.spaces,board.redCaptured,board.blackCaptured);
   viewState();
+}
+
+const rollDice = () => {
+  let dice = document.querySelectorAll('.dice');
+  dice.forEach(die => die.innerHTML = '');
+  console.log(dice);
+  board.moves = [];
+  let die1 = Math.floor(Math.random() * 6) + 1;
+  let die2 = Math.floor(Math.random() * 6) + 1;
+  if (die1 === die2) {
+    board.moves.push(die1,die2);
+    dice[0].innerHTML = die1;
+    dice[3].innerHTML = die2;
+  }
+  board.moves.push(die1,die2);
+  dice[1].innerHTML = die1;
+  dice[2].innerHTML = die2;
 }
 
 /**
