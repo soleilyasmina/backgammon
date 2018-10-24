@@ -5,7 +5,9 @@
 const board = {
   spaces: [],
   blackCaptured: [],
-  redCaptured: []
+  redCaptured: [],
+  blackEaten: [],
+  redEaten: []
 }
 
 /**
@@ -26,13 +28,13 @@ const createGameBlacks = () => {
       piece.currentSpace = 11;
       board.spaces[11].push(piece);
     }
-    else if (i < 13) {
+    else if (i < 11) {
       piece.currentSpace = 13;
-      board.spaces[17].push(piece);
+      board.spaces[16].push(piece);
     }
     else {
       piece.currentSpace = 19;
-      board.spaces[19].push(piece);
+      board.spaces[18].push(piece);
     }
   }
 }
@@ -45,14 +47,14 @@ const createGameReds = () => {
   for (let i = 1; i <= 15; i++) {
     let piece = {};
     piece.color = 'red';
-    piece.number = i - 1;
+    piece.number = i;
     if (i < 3) {
       piece.currentSpace = 12;
-      board.spaces[12].push(piece);
+      board.spaces[23].push(piece);
     }
     else if (i < 8) {
       piece.currentSpace = 23;
-      board.spaces[23].push(piece);
+      board.spaces[12].push(piece);
     }
     else if (i < 13) {
       piece.currentSpace = 5;
@@ -73,6 +75,8 @@ const viewState = () => {
   const spaces = document.querySelectorAll('.space');
   const redCaptureSpace = document.querySelector('.red-capture');
   const blackCaptureSpace = document.querySelector('.black-capture');
+  const redEatenSpace = document.querySelector('.red-eaten');
+  const blackEatenSpace = document.querySelector('.black-eaten');
   for (let i = 0; i < board.spaces.length; i++) {
     for (let j = 0; j < board.spaces[i].length; j++) {
       let piece = document.createElement('div');
@@ -84,7 +88,13 @@ const viewState = () => {
       }
       piece.classList.add('piece');
       piece.addEventListener('click', () => console.log('nothing'));
-      spaces[i].appendChild(piece);
+      if (i > 11) {
+        let reverse = 12 - i;
+        spaces[23 + reverse].appendChild(piece);
+      }
+      else {
+        spaces[i].appendChild(piece);
+      }
     }
   }
   for (let i = 0; i < board.redCaptured.length; i++) {
@@ -101,6 +111,20 @@ const viewState = () => {
     piece.addEventListener('click', () => console.log('nothing'));
     blackCaptureSpace.append(piece);
   }
+  for (let i = 0; i < board.redEaten.length; i++) {
+    let piece = document.createElement('div');
+    piece.classList.add('red-piece');
+    piece.classList.add('piece');
+    piece.addEventListener('click', () => console.log('nothing'));
+    redEatenSpace.append(piece);
+  }
+  for (let i = 0; i < board.blackEaten.length; i++) {
+    let piece = document.createElement('div');
+    piece.classList.add('black-piece');
+    piece.classList.add('piece');
+    piece.addEventListener('click', () => console.log('nothing'));
+    blackEatenSpace.append(piece);
+  }
 }
 
 const capture = (firstSpace, secondSpace) => {
@@ -112,6 +136,17 @@ const capture = (firstSpace, secondSpace) => {
       board.redCaptured.push(secondSpace.pop());
     }
   }
+}
+
+const eat = space => {
+  space = board.spaces[space];
+  if (space[0].color === 'black') {
+    board.blackEaten.push(space.pop());
+  }
+  else {
+    board.redEaten.push(space.pop());
+  }
+  viewState();
 }
 
 const changeSpace = (first, second) => {
