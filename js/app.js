@@ -21,16 +21,20 @@ const createGameBlacks = () => {
     piece.color = 'black';
     piece.number = i;
     if (i < 3) {
+      piece.currentSpace = 0;
       board.spaces[0].push(piece);
     }
     else if (i < 8) {
+      piece.currentSpace = 11;
       board.spaces[11].push(piece);
     }
-    else if (i < 11) {
-      board.spaces[16].push(piece);
+    else if (i < 13) {
+      piece.currentSpace = 13;
+      board.spaces[17].push(piece);
     }
     else {
-      board.spaces[18].push(piece);
+      piece.currentSpace = 19;
+      board.spaces[19].push(piece);
     }
   }
 }
@@ -45,16 +49,43 @@ const createGameReds = () => {
     piece.color = 'red';
     piece.number = i;
     if (i < 3) {
-      board.spaces[23].push(piece);
-    }
-    else if (i < 8) {
+      piece.currentSpace = 12;
       board.spaces[12].push(piece);
     }
-    else if (i < 11) {
-      board.spaces[7].push(piece);
+    else if (i < 8) {
+      piece.currentSpace = 23;
+      board.spaces[23].push(piece);
+    }
+    else if (i < 13) {
+      piece.currentSpace = 5;
+      board.spaces[5].push(piece);
     }
     else {
-      board.spaces[5].push(piece);
+      piece.currentSpace = 7;
+      board.spaces[7].push(piece);
+    }
+  }
+}
+
+const viewState = () => {
+  const spaces = document.querySelectorAll('.space');
+  let black = 0;
+  let red = 0;
+  for (let i = 0; i < 24; i++) {
+    for (let j = 0; j < board.spaces[i].length; j++) {
+      let piece = document.createElement('div');
+      if (board.spaces[i][j].color === 'black') {
+        piece.className = 'black-piece';
+        black += 1;
+        piece.dataset.number = black;
+      }
+      else {
+        piece.className = 'red-piece';
+        red += 1;
+        piece.dataset.number = red;
+      }
+      piece.addEventListener('click', () => console.log(piece.dataset.number))
+      spaces[i].appendChild(piece);
     }
   }
 }
@@ -69,11 +100,6 @@ const gameBoard = () => {
   }
   createGameBlacks();
   createGameReds();
-  createViewBlacks();
-  createViewReds();
 }
 gameBoard();
-
-const moveViewPiece = (piece, place) => {
-
-}
+viewState();

@@ -1,48 +1,69 @@
 .board {
   display: flex;
-  position: relative;
-  border: 1px solid black;
-}
-.left, .right {
-  border: 40px solid tan;
-  width: 480px;
-}
-
-.left {
-  margin-left: auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 650px;
+  border: 25px solid tan;
+  margin: 0 auto;
 }
 
-.right {
-  margin-right: auto;
-}
-section {
+.space {
+  width: 50px;
+  height: 250px;
   display: flex;
   flex-direction: column;
-  padding-top: 400px;
-  transform: translateY(-200px);
 }
-.up-spaces, .down-spaces {
-  flex: 1;
+
+.capture {
+  width: 50px;
+  height: 250px;
+  background-image: url(../assets/capture.png);
+}
+
+.down-red {
+  background-image: url(../assets/down-red.png);
+  background-size: cover;
+  justify-content: flex-start;
+}
+
+.down-black {
+  background-image: url(../assets/down-black.png);
+  background-size: cover;
+  justify-content: flex-start;
+}
+
+.up-red {
+  background-image: url(../assets/up-red.png);
+  background-size: cover;
+  justify-content: flex-end;
+}
+
+.up-black {
+  background-image: url(../assets/up-black.png);
+  background-size: cover;
+  justify-content: flex-end;
 }
 
 .black-piece {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background-image: linear-gradient(to top, black, #242728);
   border: 5px solid red;
   box-sizing: border-box;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s
+  transition: all 0.07s linear;
+  flex: 0 0 20%;
 }
 
 .red-piece {
-  width: 40px;
-  height: 40px;
-  position: absolute;
+  width: 50px;
+  height: 50px;
   background-image: linear-gradient(to top, red, #FF2728);
   border: 5px solid black;
   box-sizing: border-box;
   border-radius: 100%;
   z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 20%;
 }
