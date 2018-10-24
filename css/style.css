@@ -18,8 +18,16 @@
   width: 50px;
   height: 250px;
   background-image: url(../assets/capture.png);
+  display: flex;
+  flex-direction: column;
 }
 
+.red-capture {
+  justify-content: flex-end;
+}
+.black-capture {
+  justify-content: flex-start;
+}
 .down-red {
   background-image: url(../assets/down-red.png);
   background-size: cover;
