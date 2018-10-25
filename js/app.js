@@ -9,7 +9,9 @@ const board = {
   blackEaten: [],
   redEaten: [],
   moves: [],
-  turn: 'black'
+  source: null,
+  target: null,
+  turn: 'black',
 }
 
 /**
@@ -98,13 +100,6 @@ const viewState = () => {
         spaces[i].appendChild(piece);
       }
     }
-    if (i > 11) {
-      let reverse = 12 - i;
-      spaces[23 + reverse].addEventListener('click',() => console.log(i));
-    }
-    else {
-      spaces[i].addEventListener('click', () => console.log(i));
-    }
   }
   for (let i = 0; i < board.redCaptured.length; i++) {
     let piece = document.createElement('div');
@@ -133,6 +128,25 @@ const viewState = () => {
     piece.classList.add('piece');
     piece.addEventListener('click', () => console.log('nothing'));
     blackEatenSpace.append(piece);
+  }
+}
+const sourceTarget = space => {
+  if (board.source === null) {
+    console.log(`source is ${space}`);
+    board.source = space;
+  }
+  else if (board.source === space) {
+    console.log(`reset source`);
+    board.source = null;
+  }
+  else {
+    console.log(`target is ${space}`);
+    board.target = space;
+    if (isMove(board.source,board.target)) {
+      changeSpace(board.source,board.target);
+    }
+    board.source = null;
+    board.target = null;
   }
 }
 
@@ -165,7 +179,13 @@ const isMove = (first, second) => {
 }
 
 const isValidMove = (first, second) => {
-  if (second > 23 || second < 0) {
+  if (board.turn === 'black' && second < first) {
+    return false;
+  }
+  else if ((board.turn === 'red' && second > first)) {
+    return false;
+  }
+  else if (second > 23 || second < 0) {
     return false;
   }
   else if (board.spaces[first].length === 0) {
@@ -211,7 +231,6 @@ const changeSpace = (first, second) => {
     capture(firstSpace,secondSpace);
   }
   secondSpace.push(firstSpace.pop());
-  console.log(board.spaces,board.redCaptured,board.blackCaptured);
   viewState();
 }
 
@@ -239,6 +258,13 @@ const rollDice = () => {
 const gameBoard = () => {
   for (let i = 0; i < 24; i++) {
     board.spaces.push([]);
+    if (i > 11) {
+      let reverse = 12 - i;
+      document.querySelectorAll('.space')[23 + reverse].addEventListener('click',() => sourceTarget(i));
+    }
+    else {
+      document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
+    }
   }
   createGameBlacks();
   createGameReds();
