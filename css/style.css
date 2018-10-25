@@ -130,5 +130,17 @@
 }
 
 .source {
-  background: linear-gradient(to top, red, black);
+  animation: background-change 1s infinite;
+}
+
+@keyframes background-change {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
