@@ -128,3 +128,7 @@
   transition: all 0.07s linear;
   flex: 0 0 14.5%;
 }
+
+.source {
+  background: linear-gradient(to top, red, black);
+}
