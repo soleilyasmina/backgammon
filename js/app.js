@@ -198,10 +198,16 @@ const sourceTarget = space => {
   else if (board.source === null) {
     console.log(`source is ${space}`);
     board.source = space;
+    board.source < 12 ?
+    document.querySelectorAll('.space')[space].classList.toggle('source'):
+    document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
   else if (board.source === space) {
     console.log(`reset source`);
     board.source = null;
+    board.source < 12 ?
+    document.querySelectorAll('.space')[space].classList.toggle('source'):
+    document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
   else {
     console.log(`target is ${space}`);
@@ -212,6 +218,9 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(diff),1);
     }
     console.log(board.moves);
+    board.source < 12 ?
+    document.querySelectorAll('.space')[board.source].classList.toggle('source'):
+    document.querySelectorAll('.space')[23+(12-board.source)].classList.toggle('source');
     board.source = null;
     board.target = null;
     switchTurn();
