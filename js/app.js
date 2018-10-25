@@ -8,7 +8,8 @@ const board = {
   redCaptured: [],
   blackEaten: [],
   redEaten: [],
-  moves: []
+  moves: [],
+  turn: 'black'
 }
 
 /**
@@ -88,7 +89,7 @@ const viewState = () => {
         piece.classList.add('red-piece');
       }
       piece.classList.add('piece');
-      piece.addEventListener('click', () => console.log('nothing'));
+      // piece.addEventListener('click', () => console.log(i));
       if (i > 11) {
         let reverse = 12 - i;
         spaces[23 + reverse].appendChild(piece);
@@ -96,6 +97,13 @@ const viewState = () => {
       else {
         spaces[i].appendChild(piece);
       }
+    }
+    if (i > 11) {
+      let reverse = 12 - i;
+      spaces[23 + reverse].addEventListener('click',() => console.log(i));
+    }
+    else {
+      spaces[i].addEventListener('click', () => console.log(i));
     }
   }
   for (let i = 0; i < board.redCaptured.length; i++) {
@@ -125,6 +133,52 @@ const viewState = () => {
     piece.classList.add('piece');
     piece.addEventListener('click', () => console.log('nothing'));
     blackEatenSpace.append(piece);
+  }
+}
+
+const hasMoves = () => {
+  let possible = [];
+  for (let i = 0; i < board.spaces.length; i++) {
+    for (move in board.moves) {
+      if (board.spaces[i].length > 0 && board.spaces[i][0].color === board.turn) {
+        if (board.turn === 'black') {
+          possible.push(isMove(i,i+board.moves[move]));
+        }
+        else {
+          possible.push(isMove(i,i-i+board.moves[move]));
+        }
+      }
+    }
+  }
+  return possible.includes(true);
+}
+
+const isMove = (first, second) => {
+  for (move in board.moves) {
+    let diff = second - first;
+    if (diff < 0) diff *= -1;
+    if (diff === board.moves[move]) {
+      return isValidMove(first,second);
+    }
+  }
+  return false;
+}
+
+const isValidMove = (first, second) => {
+  if (second > 23 || second < 0) {
+    return false;
+  }
+  else if (board.spaces[first].length === 0) {
+    return false;
+  }
+  else if (board.spaces[second].length <= 1) {
+    return true;
+  }
+  else if (board.spaces[second][0].color === board.spaces[first][0].color) {
+    return true;
+  }
+  else {
+    return false;
   }
 }
 
