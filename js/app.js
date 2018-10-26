@@ -150,11 +150,9 @@ const sourceTarget = space => {
     }
     board.source = null;
     board.target = null;
-    console.log(board.moves);
     viewState();
   }
   else if (board.redCaptured.length > 0 && board.turn === 'red') {
-    console.log(space);
     if (board.moves.includes(24-space)) {
       if (board.spaces[space].length === 0) {
         returnCapture(space);
@@ -173,7 +171,6 @@ const sourceTarget = space => {
     }
     board.source = null;
     board.target = null;
-    console.log(board.moves);
     viewState();
   }
   else if (blackReady() && board.turn === 'black') {
@@ -193,34 +190,29 @@ const sourceTarget = space => {
     }
   }
   else if (board.source === null) {
-    console.log(`source is ${space}`);
     board.source = space;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
   else if (board.source === space) {
-    console.log(`reset source`);
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
     board.source = null;
   }
   else {
-    console.log(`target is ${space}`);
     board.target = space;
     let diff = isMove(board.source,board.target);
     if (diff != 0) {
       changeSpace(board.source,board.target);
       board.moves.splice(board.moves.indexOf(diff),1);
     }
-    console.log(board.moves);
     board.source < 12 ?
     document.querySelectorAll('.space')[board.source].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-board.source)].classList.toggle('source');
     board.source = null;
     board.target = null;
-    console.log(board.turn);
   }
   if (hasMoves() === false || board.moves === 0) {
     switchTurn();
