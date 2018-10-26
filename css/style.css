@@ -1,80 +1,146 @@
 .board {
   display: flex;
-  position: relative;
-  border: 1px solid black;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 650px;
+  border: 25px solid tan;
+  margin: 0 auto;
 }
-.left, .right {
-  border: 40px solid tan;
-  width: 480px;
+.eaten-container {
+  display: flex;
+  margin: 0 auto;
+  width: 700px;
 }
 
-.left {
-  margin-left: auto;
-}
-
-.right {
-  margin-right: auto;
-}
-section {
+.space {
+  width: 50px;
+  height: 250px;
   display: flex;
   flex-direction: column;
-  padding-top: 400px;
-  transform: translateY(-200px);
-}
-.up-spaces, .down-spaces {
-  flex: 1;
-}
-.up-black {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 200px solid black;
-  display: inline;
-  position: relative;
 }
 
-.up-red {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-bottom: 200px solid red;
-  display: inline;
-  position: relative;
+.capture {
+  width: 50px;
+  height: 250px;
+  background-image: url(../assets/capture.png);
+  display: flex;
+  flex-direction: column;
+}
+
+.eaten {
+  width: 250px;
+  height: 70px;
+  background-image: url(../assets/capture.png);
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 50%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.dice-container {
+  display: flex;
+  width: 600px;
+  margin: 0 auto;
+  justify-content: center;
+
+}
+.dice {
+  width: 150px;
+  height: 150px;
+  padding: 0 25px;
+  box-sizing: border-box;
+  color: black;
+  font-family: 'Montserrat';
+  font-size: 125px;
+  text-align: center;
+  flex: 0 0 25%;
+}
+
+.red-capture {
+  justify-content: flex-end;
+}
+.black-capture {
+  justify-content: flex-start;
+}
+.down-red {
+  background-image: url(../assets/down-red.png);
+  background-size: cover;
+  justify-content: flex-start;
 }
 
 .down-black {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-top: 200px solid black;
-  display: inline;
-  position: relative;
+  background-image: url(../assets/down-black.png);
+  background-size: cover;
+  justify-content: flex-start;
 }
 
-.down-red {
-  border-left: 40px solid transparent;
-  border-right: 40px solid transparent;
-  border-top: 200px solid red;
-  display: inline;
-  position: relative;
+.up-red {
+  background-image: url(../assets/up-red.png);
+  background-size: cover;
+  justify-content: flex-end;
+}
+
+.up-black {
+  background-image: url(../assets/up-black.png);
+  background-size: cover;
+  justify-content: flex-end;
 }
 
 .black-piece {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background-image: linear-gradient(to top, black, #242728);
-  border: 5px solid red;
-  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  background: url(../assets/black-piece.png);
+  background-size: cover;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s 
+  transition: all 0.07s linear;
+  flex: 0 0 20%;
 }
 
 .red-piece {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  background-image: linear-gradient(to top, red, #FF2728);
-  border: 5px solid black;
-  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  background: url(../assets/red-piece.png);
+  background-size: cover;
   border-radius: 100%;
   z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 20%;
+}
+
+.black-eaten .black-piece {
+  width: 50px;
+  height: 50px;
+  background: url(../assets/black-piece.png);
+  background-size: cover;
+  border-radius: 100%;
+  z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 14.5%;
+}
+.red-eaten .red-piece {
+  width: 50px;
+  height: 50px;
+  background: url(../assets/red-piece.png);
+  background-size: cover;
+  border-radius: 100%;
+  z-index: 40;
+  transition: all 0.07s linear;
+  flex: 0 0 14.5%;
+}
+
+.source {
+  animation: background-change 1s infinite;
+}
+
+@keyframes background-change {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
