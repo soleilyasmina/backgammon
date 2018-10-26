@@ -12,6 +12,7 @@ const board = {
   source: null,
   target: null,
   turn: 'black',
+  colorblind: false
 }
 
 /**
@@ -128,10 +129,7 @@ const viewState = () => {
 
 
 const sourceTarget = space => {
-  if (hasMoves() === false || board.moves === 0) {
-    switchTurn();
-  }
-  else if (board.blackCaptured.length > 0 && board.turn === 'black') {
+  if (board.blackCaptured.length > 0 && board.turn === 'black') {
     if (board.moves.includes(space+1)) {
       if (board.spaces[space].length === 0) {
         returnCapture(space);
@@ -173,7 +171,7 @@ const sourceTarget = space => {
     board.target = null;
     viewState();
   }
-  else if (blackReady() && board.turn === 'black') {
+  else if (blackReady() && blackCanEat() && board.turn === 'black') {
     if (board.spaces[space].length > 0 &&
       board.spaces[space][0].color === 'black' &&
       board.moves.includes(24-space)) {
@@ -181,10 +179,10 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(24-space),1);
     }
   }
-  else if (redReady() && board.turn === 'red') {
+  else if (redReady() && redCanEat() && board.turn === 'red') {
     if (board.spaces[space].length > 0 &&
       board.spaces[space][0].color === 'red' &&
-      board.moves.includes(space+1)) {
+      (board.moves.includes(space+1) || redEatNext(space+1))) {
       eat(space);
       board.moves.splice(board.moves.indexOf(space+1),1);
     }
@@ -257,6 +255,12 @@ const hasMoves = () => {
       }
     }
     return false;
+  }
+  else if (blackReady() && board.turn === 'black') {
+    return blackCanEat();
+  }
+  else if (redReady() && board.turn === 'red') {
+    return redCanEat();
   }
   else {
     let possible = [];
@@ -353,14 +357,33 @@ const redReady = () => {
   if (board.redCaptured.length > 0) {
     return false;
   }
-  for (let i = 18; i < 24; i++) {
+  for (let i = 0; i < 6; i++) {
     for (let j = 0; j < board.spaces[i].length; j++) {
       if (board.spaces[i][j].color === 'red') {
         ready += 1;
       }
     }
   }
-  return(ready + board.blackEaten.length === 15 ? true : false);
+  return(ready + board.redEaten.length === 15 ? true : false);
+}
+
+const redEatNext = space => {
+  let breakpoint = -1;
+  for (let i = 5; i >= 0; i--) {
+    if (board.spaces[i].length != 0) {
+      breakpoint = i;
+      break;
+    }
+  }
+  return breakpoint <= space && breakpoint != -1;
+}
+
+const blackCanEat = () => {
+    return board.moves.some(move => board.spaces[24 - move].length > 0 && board.spaces[24 - move][0].color === 'black' ? true : false);
+}
+
+const redCanEat = () => {
+    return board.moves.some(move => board.spaces[move - 1].length > 0 && board.spaces[move - 1][0].color === 'red' ? true : false);
 }
 
 const eat = space => {
@@ -408,7 +431,17 @@ const checkWin = () => {
     console.log('red wins!')
   }
 }
-
+const colorBlind = () => {
+  if (board.colorblind === false) {
+    document.querySelectorAll('.red-piece').forEach(piece => piece.innerHTML = 'R');
+    document.querySelectorAll('.black-piece').forEach(piece => piece.innerHTML = 'B');
+    board.colorblind = true;
+  }
+  else {
+    document.querySelectorAll('.piece').forEach(piece => piece.innerHTML = '');
+    board.colorblind = false;
+  }
+}
 /**
  * [gameBoard description]
  * @return {[type]} [description]
@@ -424,6 +457,7 @@ const gameBoard = () => {
       document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
     }
   }
+  document.querySelector('.dice-container').addEventListener('click', () => colorBlind());
   createGameBlacks();
   createGameReds();
 }
