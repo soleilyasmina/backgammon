@@ -155,10 +155,7 @@ const sourceTarget = space => {
   }
   else if (board.redCaptured.length > 0 && board.turn === 'red') {
     console.log(space);
-    if (hasMoves() === false) {
-      switchTurn();
-    }
-    else if (board.moves.includes(24-space)) {
+    if (board.moves.includes(24-space)) {
       if (board.spaces[space].length === 0) {
         returnCapture(space);
         board.moves.splice(board.moves.indexOf(24-space),1);
@@ -223,7 +220,6 @@ const sourceTarget = space => {
     document.querySelectorAll('.space')[23+(12-board.source)].classList.toggle('source');
     board.source = null;
     board.target = null;
-    switchTurn();
     console.log(board.turn);
   }
   if (hasMoves() === false || board.moves === 0) {
