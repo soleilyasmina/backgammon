@@ -204,10 +204,10 @@ const sourceTarget = space => {
   }
   else if (board.source === space) {
     console.log(`reset source`);
-    board.source = null;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
+    board.source = null;
   }
   else {
     console.log(`target is ${space}`);
@@ -242,6 +242,7 @@ const switchTurn = () => {
       board.turn = 'black';
       document.querySelectorAll('.dice').forEach(die => die.style.color = 'black');
     }
+
     rollDice();
   }
 }
