@@ -36,10 +36,10 @@ If a player's pieces are all within their home territory, the player can start '
 
 ## Game Logic
 
-At beginning of game, roll to determine who goes first.
+At beginning of game, black goes first.
 
-The player rolls the dice, then:
+The player rolls the dice, then: (If doubles, then player has 4 moves).
   1. If the rolling player has any pieces captured, they must first place their captured piece(s) on an open space.
   2. Else, if all of the rolling player's pieces are in the home territory, eat according to rolls.
-  3. Else, click on a piece with a yellow border to move it to the relevant place. (If doubles, then player has 4 moves).
+  3. Else, click on a piece, and move it the allotted amount based on the dice.
   4. Switch players.
