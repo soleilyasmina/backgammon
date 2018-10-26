@@ -129,10 +129,13 @@
   flex: 0 0 14.5%;
 }
 
-.source {
+.down-black.source .piece:last-child, .down-red.source .piece:last-child {
   animation: background-change 1s infinite;
 }
 
+.up-black.source .piece:first-child, .up-red.source .piece:first-child {
+  animation: background-change 1s infinite;
+}
 @keyframes background-change {
   0% {
     opacity: 1;
