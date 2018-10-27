@@ -125,6 +125,7 @@ const viewState = () => {
     piece.classList.add('piece');
     blackEatenSpace.append(piece);
   }
+  colorBlind();
 }
 
 
@@ -182,24 +183,24 @@ const sourceTarget = space => {
   else if (redReady() && redCanEat() && board.turn === 'red') {
     if (board.spaces[space].length > 0 &&
       board.spaces[space][0].color === 'red' &&
-      (board.moves.includes(space+1) || redEatNext(space+1))) {
+      board.moves.includes(space+1)) {
       eat(space);
       board.moves.splice(board.moves.indexOf(space+1),1);
     }
   }
-  else if (board.source === null) {
+  else if (board.source === null && board.spaces[space][0].color === board.turn) {
     board.source = space;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
-  else if (board.source === space) {
+  else if (board.source === space && board.spaces[space][0].color === board.turn) {
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
     board.source = null;
   }
-  else {
+  else if (isMove(board.source,space)){
     board.target = space;
     let diff = isMove(board.source,board.target);
     if (diff != 0) {
@@ -212,9 +213,17 @@ const sourceTarget = space => {
     board.source = null;
     board.target = null;
   }
-  if (hasMoves() === false || board.moves === 0) {
-    switchTurn();
+  if (board.turn === 'black') {
+    if ((blackCanEat() === false && hasMoves() === false )|| board.moves === 0) {
+      switchTurn();
+    }
   }
+  else {
+    if ((redCanEat() === false && hasMoves() === false )|| board.moves === 0) {
+      switchTurn();
+    }
+  }
+
   checkWin();
 }
 
@@ -255,12 +264,6 @@ const hasMoves = () => {
       }
     }
     return false;
-  }
-  else if (blackReady() && board.turn === 'black') {
-    return blackCanEat();
-  }
-  else if (redReady() && board.turn === 'red') {
-    return redCanEat();
   }
   else {
     let possible = [];
@@ -367,17 +370,6 @@ const redReady = () => {
   return(ready + board.redEaten.length === 15 ? true : false);
 }
 
-const redEatNext = space => {
-  let breakpoint = -1;
-  for (let i = 5; i >= 0; i--) {
-    if (board.spaces[i].length != 0) {
-      breakpoint = i;
-      break;
-    }
-  }
-  return breakpoint <= space && breakpoint != -1;
-}
-
 const blackCanEat = () => {
     return board.moves.some(move => board.spaces[24 - move].length > 0 && board.spaces[24 - move][0].color === 'black' ? true : false);
 }
@@ -431,15 +423,19 @@ const checkWin = () => {
     console.log('red wins!')
   }
 }
+
+const isColorBlind = () => {
+  board.colorblind === false ? board.colorblind = true : board.colorblind = false;
+  colorBlind();
+}
+
 const colorBlind = () => {
-  if (board.colorblind === false) {
+  if (board.colorblind === true) {
     document.querySelectorAll('.red-piece').forEach(piece => piece.innerHTML = 'R');
     document.querySelectorAll('.black-piece').forEach(piece => piece.innerHTML = 'B');
-    board.colorblind = true;
   }
   else {
     document.querySelectorAll('.piece').forEach(piece => piece.innerHTML = '');
-    board.colorblind = false;
   }
 }
 /**
@@ -457,7 +453,7 @@ const gameBoard = () => {
       document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
     }
   }
-  document.querySelector('.dice-container').addEventListener('click', () => colorBlind());
+  document.querySelector('.dice-container').addEventListener('click', () => isColorBlind());
   createGameBlacks();
   createGameReds();
 }
