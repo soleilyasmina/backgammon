@@ -188,13 +188,13 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(space+1),1);
     }
   }
-  else if (board.source === null && board.spaces[space][0].color === board.turn) {
+  else if (board.source === null && board.spaces[space].length > 0 && board.spaces[space][0].color === board.turn) {
     board.source = space;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
-  else if (board.source === space && board.spaces[space][0].color === board.turn) {
+  else if (board.source === space && board.spaces[space].length > 0 &&  board.spaces[space][0].color === board.turn) {
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
@@ -228,18 +228,16 @@ const sourceTarget = space => {
 }
 
 const switchTurn = () => {
-  if (board.moves.length === 0 || hasMoves() === false) {
-    if (board.turn === 'black') {
-      board.turn = 'red';
-      document.querySelectorAll('.dice').forEach(die => die.style.color = 'red');
-    }
-    else {
-      board.turn = 'black';
-      document.querySelectorAll('.dice').forEach(die => die.style.color = 'black');
-    }
-
-    rollDice();
+  if (board.turn === 'black') {
+    board.turn = 'red';
+    document.querySelectorAll('.dice').forEach(die => die.style.color = 'red');
   }
+  else {
+    board.turn = 'black';
+    document.querySelectorAll('.dice').forEach(die => die.style.color = 'black');
+  }
+
+  rollDice();
 }
 
 const hasMoves = () => {
