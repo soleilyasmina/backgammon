@@ -96,7 +96,12 @@
   transition: all 0.07s linear;
   flex: 0 0 20%;
 }
-
+.piece {
+  color: white;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 40px;
+}
 .red-piece {
   width: 50px;
   height: 50px;
@@ -129,10 +134,13 @@
   flex: 0 0 14.5%;
 }
 
-.source {
+.down-black.source .piece:last-child, .down-red.source .piece:last-child {
   animation: background-change 1s infinite;
 }
 
+.up-black.source .piece:first-child, .up-red.source .piece:first-child {
+  animation: background-change 1s infinite;
+}
 @keyframes background-change {
   0% {
     opacity: 1;

@@ -12,6 +12,7 @@ const board = {
   source: null,
   target: null,
   turn: 'black',
+  colorblind: false
 }
 
 /**
@@ -124,14 +125,12 @@ const viewState = () => {
     piece.classList.add('piece');
     blackEatenSpace.append(piece);
   }
+  colorBlind();
 }
 
 
 const sourceTarget = space => {
-  if (hasMoves() === false || board.moves === 0) {
-    switchTurn();
-  }
-  else if (board.blackCaptured.length > 0 && board.turn === 'black') {
+  if (board.blackCaptured.length > 0 && board.turn === 'black') {
     if (board.moves.includes(space+1)) {
       if (board.spaces[space].length === 0) {
         returnCapture(space);
@@ -150,11 +149,9 @@ const sourceTarget = space => {
     }
     board.source = null;
     board.target = null;
-    console.log(board.moves);
     viewState();
   }
   else if (board.redCaptured.length > 0 && board.turn === 'red') {
-    console.log(space);
     if (board.moves.includes(24-space)) {
       if (board.spaces[space].length === 0) {
         returnCapture(space);
@@ -173,10 +170,9 @@ const sourceTarget = space => {
     }
     board.source = null;
     board.target = null;
-    console.log(board.moves);
     viewState();
   }
-  else if (blackReady() && board.turn === 'black') {
+  else if (blackReady() && blackCanEat() && board.turn === 'black') {
     if (board.spaces[space].length > 0 &&
       board.spaces[space][0].color === 'black' &&
       board.moves.includes(24-space)) {
@@ -184,7 +180,7 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(24-space),1);
     }
   }
-  else if (redReady() && board.turn === 'red') {
+  else if (redReady() && redCanEat() && board.turn === 'red') {
     if (board.spaces[space].length > 0 &&
       board.spaces[space][0].color === 'red' &&
       board.moves.includes(space+1)) {
@@ -192,39 +188,42 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(space+1),1);
     }
   }
-  else if (board.source === null) {
-    console.log(`source is ${space}`);
+  else if (board.source === null && board.spaces[space][0].color === board.turn) {
     board.source = space;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
-  else if (board.source === space) {
-    console.log(`reset source`);
+  else if (board.source === space && board.spaces[space][0].color === board.turn) {
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
     board.source = null;
   }
-  else {
-    console.log(`target is ${space}`);
+  else if (isMove(board.source,space)){
     board.target = space;
     let diff = isMove(board.source,board.target);
     if (diff != 0) {
       changeSpace(board.source,board.target);
       board.moves.splice(board.moves.indexOf(diff),1);
     }
-    console.log(board.moves);
     board.source < 12 ?
     document.querySelectorAll('.space')[board.source].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-board.source)].classList.toggle('source');
     board.source = null;
     board.target = null;
-    console.log(board.turn);
   }
-  if (hasMoves() === false || board.moves === 0) {
-    switchTurn();
+  if (board.turn === 'black') {
+    if ((blackCanEat() === false && hasMoves() === false )|| board.moves === 0) {
+      switchTurn();
+    }
   }
+  else {
+    if ((redCanEat() === false && hasMoves() === false )|| board.moves === 0) {
+      switchTurn();
+    }
+  }
+
   checkWin();
 }
 
@@ -361,14 +360,22 @@ const redReady = () => {
   if (board.redCaptured.length > 0) {
     return false;
   }
-  for (let i = 18; i < 24; i++) {
+  for (let i = 0; i < 6; i++) {
     for (let j = 0; j < board.spaces[i].length; j++) {
       if (board.spaces[i][j].color === 'red') {
         ready += 1;
       }
     }
   }
-  return(ready + board.blackEaten.length === 15 ? true : false);
+  return(ready + board.redEaten.length === 15 ? true : false);
+}
+
+const blackCanEat = () => {
+    return board.moves.some(move => board.spaces[24 - move].length > 0 && board.spaces[24 - move][0].color === 'black' ? true : false);
+}
+
+const redCanEat = () => {
+    return board.moves.some(move => board.spaces[move - 1].length > 0 && board.spaces[move - 1][0].color === 'red' ? true : false);
 }
 
 const eat = space => {
@@ -417,6 +424,20 @@ const checkWin = () => {
   }
 }
 
+const isColorBlind = () => {
+  board.colorblind === false ? board.colorblind = true : board.colorblind = false;
+  colorBlind();
+}
+
+const colorBlind = () => {
+  if (board.colorblind === true) {
+    document.querySelectorAll('.red-piece').forEach(piece => piece.innerHTML = 'R');
+    document.querySelectorAll('.black-piece').forEach(piece => piece.innerHTML = 'B');
+  }
+  else {
+    document.querySelectorAll('.piece').forEach(piece => piece.innerHTML = '');
+  }
+}
 /**
  * [gameBoard description]
  * @return {[type]} [description]
@@ -432,6 +453,7 @@ const gameBoard = () => {
       document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
     }
   }
+  document.querySelector('.dice-container').addEventListener('click', () => isColorBlind());
   createGameBlacks();
   createGameReds();
 }
