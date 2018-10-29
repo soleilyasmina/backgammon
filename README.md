@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A browser-implemented backgammon game.
+A browser-implemented backgammon game using jQuery, JavaScript ES6, HTML, and CSS
 
 ## Definitions
 
