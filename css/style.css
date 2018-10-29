@@ -1,3 +1,48 @@
+main {
+  display: flex;
+  width: 975px;
+  margin: 0 auto;
+}
+
+.board-container {
+  flex: 2;
+}
+
+.win {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: all 1s linear;
+  background-color: white;
+  display: none;
+}
+.instructions {
+  flex: 1;
+  padding-right: 30px;
+}
+.win-dialog {
+  font-size: 100px;
+  z-index: 1;
+}
+h1 {
+  font-family: 'Montserrat';
+  font-size: 30px;
+  text-align: center;
+}
+p {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  text-align: center;
+}
+button {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  background-color: tan;
+  text-align: center;
+}
 .board {
   display: flex;
   flex-wrap: wrap;
@@ -93,7 +138,6 @@
   background-size: cover;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s linear;
   flex: 0 0 20%;
 }
 .piece {
@@ -101,6 +145,7 @@
   text-align: center;
   font-family: 'Montserrat';
   font-size: 40px;
+  transition: all 0.5s linear;
 }
 .red-piece {
   width: 50px;
@@ -109,7 +154,6 @@
   background-size: cover;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s linear;
   flex: 0 0 20%;
 }
 
@@ -120,7 +164,7 @@
   background-size: cover;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s linear;
+  transition: all 0.5s linear;
   flex: 0 0 14.5%;
 }
 .red-eaten .red-piece {
@@ -130,7 +174,7 @@
   background-size: cover;
   border-radius: 100%;
   z-index: 40;
-  transition: all 0.07s linear;
+  transition: all 0.5s linear;
   flex: 0 0 14.5%;
 }
 

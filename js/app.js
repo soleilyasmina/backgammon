@@ -188,13 +188,13 @@ const sourceTarget = space => {
       board.moves.splice(board.moves.indexOf(space+1),1);
     }
   }
-  else if (board.source === null && board.spaces[space][0].color === board.turn) {
+  else if (board.source === null && board.spaces[space].length > 0 && board.spaces[space][0].color === board.turn) {
     board.source = space;
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
   }
-  else if (board.source === space && board.spaces[space][0].color === board.turn) {
+  else if (board.source === space && board.spaces[space].length > 0 &&  board.spaces[space][0].color === board.turn) {
     board.source < 12 ?
     document.querySelectorAll('.space')[space].classList.toggle('source'):
     document.querySelectorAll('.space')[23+(12-space)].classList.toggle('source');
@@ -228,18 +228,16 @@ const sourceTarget = space => {
 }
 
 const switchTurn = () => {
-  if (board.moves.length === 0 || hasMoves() === false) {
-    if (board.turn === 'black') {
-      board.turn = 'red';
-      document.querySelectorAll('.dice').forEach(die => die.style.color = 'red');
-    }
-    else {
-      board.turn = 'black';
-      document.querySelectorAll('.dice').forEach(die => die.style.color = 'black');
-    }
-
-    rollDice();
+  if (board.turn === 'black') {
+    board.turn = 'red';
+    document.querySelectorAll('.dice').forEach(die => die.style.color = 'red');
   }
+  else {
+    board.turn = 'black';
+    document.querySelectorAll('.dice').forEach(die => die.style.color = 'black');
+  }
+
+  rollDice();
 }
 
 const hasMoves = () => {
@@ -417,10 +415,17 @@ const rollDice = () => {
 
 const checkWin = () => {
   if (board.blackEaten.length === 15) {
-    console.log('black wins!')
+    document.querySelectorAll('.piece').forEach(piece => piece.style.opacity = '0');
+    document.querySelector('.win-dialog').innerHTML = 'Black wins!';
+    document.querySelector('.win').style.display = 'block';
+    document.querySelector('.win').style.opacity = '1';
   }
   else if (board.redEaten.length === 15) {
-    console.log('red wins!')
+    document.querySelectorAll('.piece').forEach(piece => piece.style.opacity = '0');
+    document.querySelector('.win-dialog').innerHTML = 'Red wins!';
+    document.querySelector('.win-dialog').style.color = 'red';
+    document.querySelector('.win').style.display = 'block';
+    document.querySelector('.win').style.opacity = '1';
   }
 }
 
@@ -453,7 +458,7 @@ const gameBoard = () => {
       document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
     }
   }
-  document.querySelector('.dice-container').addEventListener('click', () => isColorBlind());
+  document.querySelector('.colorblind').addEventListener('click', () => isColorBlind());
   createGameBlacks();
   createGameReds();
 }

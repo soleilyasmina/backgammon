@@ -34,6 +34,13 @@ If a piece is captured, it moves to the center column of the board. It can only 
 ![Eating Logic](assets/eat.jpg)
 If a player's pieces are all within their home territory, the player can start 'eating' their pieces, by taking away pieces from corresponding spaces based on roll. The game ends when all pieces from either opponent's side are 'eaten'.
 
+## Issues
+
+One of my main issues with this game is preventing improper piece selection. I used a fair amount of conditions to ensure that a piece could only be selected when it was the proper player's turn.
+```
+else if (board.source === null && board.spaces[space].length > 0 && board.spaces[space][0].color === board.turn) {
+```
+
 ## Game Logic
 
 At beginning of game, black goes first.
