@@ -415,10 +415,17 @@ const rollDice = () => {
 
 const checkWin = () => {
   if (board.blackEaten.length === 15) {
-    console.log('black wins!')
+    document.querySelectorAll('.piece').forEach(piece => piece.style.opacity = '0');
+    document.querySelector('.win-dialog').innerHTML = 'Black wins!';
+    document.querySelector('.win').style.display = 'block';
+    document.querySelector('.win').style.opacity = '1';
   }
   else if (board.redEaten.length === 15) {
-    console.log('red wins!')
+    document.querySelectorAll('.piece').forEach(piece => piece.style.opacity = '0');
+    document.querySelector('.win-dialog').innerHTML = 'Red wins!';
+    document.querySelector('.win-dialog').style.color = 'red';
+    document.querySelector('.win').style.display = 'block';
+    document.querySelector('.win').style.opacity = '1';
   }
 }
 
@@ -451,7 +458,7 @@ const gameBoard = () => {
       document.querySelectorAll('.space')[i].addEventListener('click', () => sourceTarget(i));
     }
   }
-  document.querySelector('.dice-container').addEventListener('click', () => isColorBlind());
+  document.querySelector('.colorblind').addEventListener('click', () => isColorBlind());
   createGameBlacks();
   createGameReds();
 }
