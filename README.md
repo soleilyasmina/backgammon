@@ -50,3 +50,6 @@ The player rolls the dice, then: (If doubles, then player has 4 moves).
   2. Else, if all of the rolling player's pieces are in the home territory, eat according to rolls.
   3. Else, click on a piece, and move it the allotted amount based on the dice.
   4. Switch players.
+
+## Deployment
+This project is available at: [http://tapgammon.surge.sh/](http://tapgammon.surge.sh/)
